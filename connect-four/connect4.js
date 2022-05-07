@@ -101,7 +101,7 @@ function endGame(msg) {
   //use set timeout to give the players a second to see the win condtion before resetting the game
   setTimeout(() =>{
     location.reload();
-  }, 1000)
+  }, 2000)
   // TODO: pop up alert message
 }
 
