@@ -17,6 +17,7 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  // using two loops, the first loop will create the base array and the second loop will populate it based on the width of the board
   for(let i = 0; i < height; i ++){
     board[i] = [];
     for(let j = 0; j < width; j ++){
@@ -63,7 +64,10 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
+  // initialize variable y
   let y = null;
+  //use a loop to check the lowest position that y could be on the board
+  // if no positions available, return null
   for(let i = height - 1; i >= 0; i --){
     if(board[i][x] === null){
       y = i;
@@ -93,6 +97,8 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   alert(msg);
+
+  //use set timeout to give the players a second to see the win condtion before resetting the game
   setTimeout(() =>{
     location.reload();
   }, 1000)
@@ -139,7 +145,8 @@ function handleClick(evt) {
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
 function checkForWin() {
-  function _win(cells) {
+  function win(cells) {
+
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
@@ -156,19 +163,25 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
+  // use two loops to iterrate through the whole array and its nested array
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
+      //creates possible win conditions that checks there is four pieces lined up on the board together
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
       let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
       let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
       let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
-      if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+      //sends the win condition to the win function to further check and make sure the four pieces are all legal and belong to the same player
+      if (win(horiz) || win(vert) || win(diagDR) || win(diagDL)) {
         return true;
       }
     }
   }
 }
+
+// adds functions that loops through each of the nested arrays to check if they are all filled
+// if all arrays do not equal null, return false.
 
 function checkForTie() { 
  return board.every((row) =>{
