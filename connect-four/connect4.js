@@ -122,7 +122,9 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-
+  if (checkForTie()){
+    return endGame("It's a Tie!!");
+  }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   console.log("player ",currPlayer);
@@ -166,6 +168,16 @@ function checkForWin() {
       }
     }
   }
+}
+
+function checkForTie() { 
+ return board.every((row) =>{
+   return row.every((col) =>{
+     return col !== null;
+   })
+
+ })
+   
 }
 
 makeBoard();
